@@ -16,11 +16,19 @@ describe('Testes da função getOpeningHours', () => {
     };
     expect(getOpeningHours()).toEqual(expected);
   });
+  const fechado = 'The zoo is closed';
   it('Verifica se o horário passado esta correto.', () => {
-    expect(getOpeningHours('Wednesday', '12:00-am')).toBe('The zoo is closed');
-    expect(getOpeningHours('Wednesday', '08:00-am')).toBe('The zoo is open');
-    expect(getOpeningHours('Sunday', '06:00-pm')).toBe('The zoo is open');
-    expect(getOpeningHours('Sunday', '09:00-pm')).toBe('The zoo is closed');
+    expect(getOpeningHours('Wednesday', '12:00-AM')).toBe(fechado);
+  });
+  it('Verifica se o zoom estara aberto no horário da 8 da tarde.', () => {
+    expect(getOpeningHours('Thursday', '10:00-am')).toBe('The zoo is open');
+  });
+  it('Verifica se o zoom estara aberto no horário passado por parametro.', () => {
+    expect(getOpeningHours('Saturday', '06:00-PM')).toBe('The zoo is open');
+  });
+  it('Verifica se o zoom estara aberto no horário passado por parametro.', () => {
+    expect(getOpeningHours('Sunday', '09:00-pm')).toBe(fechado);
+    expect(getOpeningHours('Monday', '04:00-AM')).toBe(fechado);
   });
   it('dispara erro com a mensagem "O id inserido não é de uma pessoa colaboradora gerente!", quando o id inserido não for de uma pessoa colaboradora genrente', () => {
     expect(() => getOpeningHours('Sunday', '13:00-am')).toThrow('The hour must be between 0 and 12');
@@ -29,5 +37,9 @@ describe('Testes da função getOpeningHours', () => {
     expect(() => getOpeningHours('Sunda', '12:70-ph')).toThrow('The day must be valid. Example: Monday');
     expect(() => getOpeningHours('Tuesday', '1X:33-PM')).toThrow();
     expect(() => getOpeningHours('aaaaa', '11:33-PM')).toThrow();
+  });
+  it('Verifica se a hora ou os minutos são numeros.', () => {
+    expect(() => getOpeningHours('Monday', 'nonumber')).toThrow('The hour should represent a number');
+    expect(() => getOpeningHours('Monday', '11:aa-AM')).toThrow('The minutes should represent a number');
   });
 });

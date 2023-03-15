@@ -7,6 +7,9 @@ describe('Testes da função HandlerElephants', () => {
   it('Verifica se o resultado é undefined caso não seja passado nenhum parâmetro.', () => {
     expect(handlerElephants()).toBe(undefined);
   });
+  it('Verifica se o resultado é null caso não seja passado um parâmetro diferente do solicitado.', () => {
+    expect(handlerElephants('locat')).toBe(null);
+  });
   it('Verifica o resultado caso não seja uma string.', () => {
     expect(handlerElephants(23)).toBe('Parâmetro inválido, é necessário uma string');
   });
